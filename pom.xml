@@ -4,10 +4,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.demo</groupId>
-    <artifactId>webshoppe-commerce</artifactId>
+    <artifactId>webshoppe-commerce-servlet-demo1a</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>webshoppe-commerce</name>
+    <name>webshoppe-commerce-servlet-demo1a</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -47,7 +47,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>webshoppe-commerce</finalName>
+        <finalName>webshoppe-commerce-servlet-demo1a</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
