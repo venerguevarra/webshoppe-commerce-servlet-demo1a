@@ -2,6 +2,7 @@ package com.webshoppe.ecommerce.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,20 +37,58 @@ public class ToyCatalogServlet extends HttpServlet {
         if (toys.isEmpty()) {
             stringBuilder.append("<b>Toy Catalog Empty</b>");
         } else {
-            stringBuilder.append("<table>");
-            stringBuilder.append("<th>");
-            stringBuilder.append("<td>ID</td>");
-            stringBuilder.append("<td>Name</td>");
-            stringBuilder.append("<td>Description</td>");
-            stringBuilder.append("<td>Price</td>");
-            stringBuilder.append("</th>");
+            stringBuilder.append("<table class='table'>");
+            stringBuilder.append("<thead>");
+            stringBuilder.append("<th scope='col'>ID</th>");
+            stringBuilder.append("<th scope='col'>Name</th>");
+            stringBuilder.append("<th scope='col'>Description</th>");
+            stringBuilder.append("<th scope='col'>Price</th>");
+            stringBuilder.append("</thead>");
             toys.forEach(e -> {
-                stringBuilder.append("<th>");
+                stringBuilder.append("<tr scope='row'>");
                 stringBuilder.append("<td>").append(e.getId()).append("</td>");
                 stringBuilder.append("<td>").append(e.getName()).append("</td>");
                 stringBuilder.append("<td>").append(e.getDescription()).append("</td>");
                 stringBuilder.append("<td>").append(e.getPrice()).append("</td>");
-                stringBuilder.append("</th>");
+                stringBuilder.append("</tr>");
+            });
+            stringBuilder.append("</table>");
+        }
+
+        PrintWriter out = response.getWriter();
+        out.println(stringBuilder.toString());
+        out.flush();
+        out.close();
+    }
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+
+        final String minimumPriceParam = request.getParameter("minimum-price");
+        final BigDecimal minimumPrice = new BigDecimal(minimumPriceParam);
+        
+        final String maximumPriceParam = request.getParameter("maximum-price");
+        final BigDecimal maximumPrice = new BigDecimal(maximumPriceParam);
+
+        final List<Toy> toys = toyCatalogService.getToyCatalog(minimumPrice, maximumPrice);
+        final StringBuilder stringBuilder = new StringBuilder();
+        if (toys.isEmpty()) {
+            stringBuilder.append("<b>Cannot find toys that met the price range.</b>");
+        } else {
+            stringBuilder.append("<table class='table'>");
+            stringBuilder.append("<thead>");
+            stringBuilder.append("<th scope='col'>ID</th>");
+            stringBuilder.append("<th scope='col'>Name</th>");
+            stringBuilder.append("<th scope='col'>Description</th>");
+            stringBuilder.append("<th scope='col'>Price</th>");
+            stringBuilder.append("</thead>");
+            toys.forEach(e -> {
+                stringBuilder.append("<tr scope='row'>");
+                stringBuilder.append("<td>").append(e.getId()).append("</td>");
+                stringBuilder.append("<td>").append(e.getName()).append("</td>");
+                stringBuilder.append("<td>").append(e.getDescription()).append("</td>");
+                stringBuilder.append("<td>").append(e.getPrice()).append("</td>");
+                stringBuilder.append("</tr>");
             });
             stringBuilder.append("</table>");
         }
