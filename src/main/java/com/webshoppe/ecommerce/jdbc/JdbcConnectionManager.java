@@ -16,7 +16,7 @@ public class JdbcConnectionManager {
 
     public Connection getConnection() throws SQLException {
         try {
-            final Connection connection = DriverManager.getConnection("jdbc:mariadb://116.93.119.212:3306/webshoppe", "web_user", "pass123$$");
+            final Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/webshoppe", "user", "pass");
             return connection;
         } catch (SQLException e) {
             throw e;
